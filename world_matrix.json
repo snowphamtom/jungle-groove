@@ -1,0 +1,69 @@
+{
+  "world": "JungleGroove",
+  "law": "Claimed <= Interior",
+  "version": "2026-11-08",
+  "topology": {
+    "nodes": 48,
+    "node_range": [3, 97],
+    "node_step": 2,
+    "pairs": 1128,
+    "doors": 7140,
+    "never_pairs": 184,
+    "triple_alias_gate": 14280,
+    "zones": [
+      {"id": 0, "name": "CanopyClub", "nodes": 8, "interior_dancers": 6},
+      {"id": 1, "name": "Riverwalk", "nodes": 8, "interior_dancers": 4},
+      {"id": 2, "name": "TreeMarket", "nodes": 8, "interior_dancers": 4},
+      {"id": 3, "name": "CliffStage", "nodes": 8, "interior_dancers": 3},
+      {"id": 4, "name": "BambooGrove", "nodes": 8, "interior_dancers": 5},
+      {"id": 5, "name": "RootCellar", "nodes": 8, "interior_dancers": 2}
+    ],
+    "capacity_sum": 24
+  },
+  "cast": [
+    {"id": "leo", "name": "Leo", "glyph": "🦁", "home_zone": 0},
+    {"id": "zara", "name": "Zara", "glyph": "🦓", "home_zone": 1},
+    {"id": "momo", "name": "Momo", "glyph": "🐵", "home_zone": 2},
+    {"id": "pip", "name": "Pip", "glyph": "🦜", "home_zone": 3},
+    {"id": "tiko", "name": "Tiko", "glyph": "🐯", "home_zone": 0},
+    {"id": "nala", "name": "Nala", "glyph": "🦒", "home_zone": 4}
+  ],
+  "outfits": [
+    {"id": "natural", "label": "Natural", "icon": "🌿", "amp": 1.0},
+    {"id": "tuxedo", "label": "Tuxedo", "icon": "🎩", "amp": 1.0},
+    {"id": "hula", "label": "Hula", "icon": "🌺", "amp": 1.0},
+    {"id": "shades", "label": "Shades", "icon": "🕶️", "amp": 0.95},
+    {"id": "cape", "label": "Hero Cape", "icon": "🦸", "amp": 1.15},
+    {"id": "disco", "label": "Disco", "icon": "✨", "amp": 1.15},
+    {"id": "rain", "label": "Raincoat", "icon": "🌧️", "amp": 1.0},
+    {"id": "crown", "label": "Crown", "icon": "👑", "amp": 1.15},
+    {"id": "chef", "label": "Chef", "icon": "🍳", "amp": 0.95},
+    {"id": "space", "label": "Astro", "icon": "🚀", "amp": 1.0}
+  ],
+  "tracks": [
+    {"id": "safari", "name": "Groove Safari", "bpm": 112, "mood": "major"},
+    {"id": "bamboo", "name": "Bamboo Bounce", "bpm": 128, "mood": "bright"},
+    {"id": "moon", "name": "Moonlit Mambo", "bpm": 96, "mood": "soft"},
+    {"id": "stampede", "name": "Stampede Drop", "bpm": 140, "mood": "hype"},
+    {"id": "river", "name": "River Rhythm", "bpm": 104, "mood": "warm"}
+  ],
+  "residual": {
+    "dancing_formula": "party && !held && !muted && track_active",
+    "hold_dominates": true,
+    "beat_period_seconds": "60 / bpm"
+  },
+  "admission": {
+    "zone_entry": "active_dancers(zone) < interior_dancers(zone)",
+    "outfit_equip": "always_grant",
+    "path_move": "edge in doors AND edge not in never_pairs",
+    "refuse_is_visible": true
+  },
+  "not_claimed": [
+    "MAGPIE",
+    "CeilingGate",
+    "Headroom_as_product_name",
+    "combat_stats",
+    "pay_to_win_outfits",
+    "unmeasured_zones"
+  ]
+}
