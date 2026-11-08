@@ -4,83 +4,92 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Jungle Groove — Living Party</title>
+<title>Jungle Groove — Icon Party</title>
 <style>
-:root{--cream:#fefae0;--gold:#e9c46a;--panel:rgba(10,24,18,.96);--night:#06120e}
+:root{--cream:#fefae0;--gold:#e9c46a;--panel:rgba(20,8,40,.95);--lime:#c6ff00;--purple:#5b2c6f}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,sans-serif;background:var(--night);color:var(--cream);touch-action:manipulation;user-select:none}
+html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,sans-serif;background:#1a0530;color:var(--cream);touch-action:manipulation;user-select:none}
 #app{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto}
-header{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;padding:8px 10px;padding-top:max(8px,env(safe-area-inset-top));background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);z-index:30;pointer-events:none}
+header{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;padding:8px 10px;padding-top:max(8px,env(safe-area-inset-top));background:linear-gradient(180deg,rgba(0,0,0,.5),transparent);z-index:30;pointer-events:none}
 header>*{pointer-events:auto}
-.logo{font-weight:800;font-size:12px;color:var(--gold)}.logo small{display:block;font-weight:500;font-size:9px;letter-spacing:.12em;color:#7fb396}
-.chip{background:var(--panel);border:1px solid rgba(233,196,106,.28);border-radius:999px;padding:5px 9px;font-size:10px}
-.mode-toggle{display:flex;border-radius:999px;overflow:hidden;border:1px solid rgba(233,196,106,.35)}
-.mode-toggle button{border:0;background:transparent;color:#7fb396;padding:6px 10px;font:700 10px/1 inherit;cursor:pointer;min-height:32px}
-.mode-toggle button.on{background:var(--gold);color:#1a140e}
-#world{position:relative;overflow:hidden;background:linear-gradient(180deg,#0a1a14,#1b4332 55%,#245c40)}
-#world[data-light=sunset]{background:linear-gradient(180deg,#2b1508,#7a3e12 45%,#2d6a4f)}
-#world[data-light=moon]{background:linear-gradient(180deg,#050b18,#0d2137 50%,#1b4332)}
-#world[data-light=neon]{background:linear-gradient(180deg,#1a0530,#3d1a5c 40%,#0f3d2e)}
-#world[data-light=day]{background:linear-gradient(180deg,#4a7c59,#74a57a 45%,#2d6a4f)}
-.zone{position:absolute;border-radius:18px;border:1px dashed rgba(254,250,224,.14);background:rgba(0,0,0,.1);display:flex;align-items:flex-start;justify-content:center;padding-top:5px;pointer-events:none}
-.zone .label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,250,224,.5);font-weight:700}
-.zone.hot{border-color:rgba(233,196,106,.5);background:rgba(233,196,106,.1)}
-#z-dance{left:6%;right:6%;top:10%;height:40%}#z-bar{left:5%;width:42%;bottom:6%;height:30%}#z-lounge{right:5%;width:42%;bottom:6%;height:30%}
-.disco{position:absolute;left:50%;top:6%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:conic-gradient(#ff6b6b,#feca57,#48dbfb,#ff9ff3,#1dd1a1,#ff6b6b);animation:spin 3s linear infinite;pointer-events:none}
-@keyframes spin{to{transform:rotate(360deg)}}
+.logo{font-weight:800;font-size:12px;color:var(--lime)}.logo small{display:block;font-weight:500;font-size:9px;letter-spacing:.12em;color:#d4a5ff}
+.chip{background:var(--panel);border:1px solid rgba(198,255,0,.35);border-radius:999px;padding:5px 9px;font-size:10px}
+.mode-toggle{display:flex;border-radius:999px;overflow:hidden;border:1px solid rgba(198,255,0,.4)}
+.mode-toggle button{border:0;background:transparent;color:#d4a5ff;padding:6px 10px;font:700 10px/1 inherit;cursor:pointer;min-height:32px}
+.mode-toggle button.on{background:var(--lime);color:#1a0530}
+#world{position:relative;overflow:hidden;background:linear-gradient(180deg,#c6ff00 0%,#c6ff00 28%,#7b2cbf 28%,#3d1a5c 70%,#1a0530 100%)}
+#world[data-light=sunset]{background:linear-gradient(180deg,#ff6b35 0%,#ff6b35 28%,#5b2c6f 28%,#2d1b4e 100%)}
+#world[data-light=moon]{background:linear-gradient(180deg,#1a1a40 0%,#1a1a40 28%,#2d1b4e 28%,#0d0d1a 100%)}
+#world[data-light=neon]{background:linear-gradient(180deg,#c6ff00 0%,#c6ff00 28%,#ff00aa 28%,#1a0530 100%)}
+#world[data-light=day]{background:linear-gradient(180deg,#87ceeb 0%,#87ceeb 28%,#6c3483 28%,#4a235a 100%)}
+.towers{position:absolute;left:0;right:0;top:0;height:32%;pointer-events:none;opacity:.9}
+.towers:before,.towers:after{content:"";position:absolute;bottom:0;width:22%;background:linear-gradient(180deg,#4a3f6b,#2d2540);box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.towers:before{left:18%;height:100%;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%)}
+.towers:after{right:18%;height:92%;clip-path:polygon(0 0,100% 10%,100% 100%,0 100%)}
+.bowl{position:absolute;left:8%;right:8%;top:34%;bottom:18%;border-radius:40% 40% 20% 20%;background:radial-gradient(ellipse at 50% 30%,#6c5b7b 0%,#4a3f6b 40%,#3d3558 100%);border:3px solid rgba(198,255,0,.25);box-shadow:inset 0 20px 40px rgba(0,0,0,.35);pointer-events:none}
+.bowl:after{content:"";position:absolute;inset:12% 18% 20%;border-radius:50%;border:2px dashed rgba(255,0,170,.3)}
+.graffiti{position:absolute;inset:0;pointer-events:none;opacity:.55;background:
+  radial-gradient(circle at 20% 70%,#ff00aa 0%,transparent 8%),
+  radial-gradient(circle at 80% 65%,#00f5ff 0%,transparent 10%),
+  radial-gradient(circle at 50% 80%,#c6ff00 0%,transparent 12%),
+  radial-gradient(circle at 30% 50%,#ff6b35 0%,transparent 6%)}
+.zone{position:absolute;border-radius:18px;border:1px dashed rgba(254,250,224,.2);display:flex;align-items:flex-start;justify-content:center;padding-top:5px;pointer-events:none}
+.zone .label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,250,224,.55);font-weight:700}
+.zone.hot{border-color:var(--lime);background:rgba(198,255,0,.12)}
+#z-dance{left:10%;right:10%;top:36%;height:38%}
+#z-bar{left:5%;width:42%;bottom:4%;height:22%}
+#z-lounge{right:5%;width:42%;bottom:4%;height:22%}
 .cast{position:absolute;inset:0;pointer-events:none}
-.char{position:absolute;width:88px;height:120px;margin-left:-44px;margin-top:-60px;transition:left .85s ease,top .85s ease,filter .15s;pointer-events:none}
+.char{position:absolute;width:84px;height:116px;margin-left:-42px;margin-top:-58px;transition:left .85s ease,top .85s ease,filter .15s;pointer-events:none}
 .interact .char{pointer-events:auto;cursor:grab}
-.char.selected{filter:drop-shadow(0 0 10px var(--gold));z-index:5}
+.char.selected{filter:drop-shadow(0 0 12px var(--lime));z-index:5}
 .char .sprite{width:100%;height:100%;display:block;overflow:visible}
-.char .name{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:rgba(0,0,0,.5);padding:1px 6px;border-radius:999px;white-space:nowrap}
+.char .name{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:rgba(0,0,0,.55);padding:1px 6px;border-radius:999px;white-space:nowrap}
 .char .bubble{position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:14px;opacity:0;transition:opacity .25s}
 .char .bubble.show{opacity:1}
-.char .prop{position:absolute;top:20%;left:8%;font-size:16px;opacity:0;z-index:2}.char .prop.show{opacity:1}
+.char .prop{position:absolute;top:18%;left:6%;font-size:15px;opacity:0;z-index:2}.char .prop.show{opacity:1}
 .char[data-act=dance] .figure{animation:bob var(--beat,.5s) ease-in-out infinite}
-.char[data-act=dance] .arm-l{animation:armL var(--beat,.5s) ease-in-out infinite;transform-origin:22px 55px}
-.char[data-act=dance] .arm-r{animation:armR var(--beat,.5s) ease-in-out infinite;transform-origin:58px 55px}
-.char[data-act=dance] .leg-l{animation:legL var(--beat,.5s) ease-in-out infinite;transform-origin:30px 85px}
-.char[data-act=dance] .leg-r{animation:legR var(--beat,.5s) ease-in-out infinite;transform-origin:50px 85px}
-.char[data-act=dance] .tail{animation:tailWag calc(var(--beat,.5s)*1.2) ease-in-out infinite;transform-origin:55px 78px}
+.char[data-act=dance] .arm-l{animation:armL var(--beat,.5s) ease-in-out infinite;transform-origin:12px 80px}
+.char[data-act=dance] .arm-r{animation:armR var(--beat,.5s) ease-in-out infinite;transform-origin:68px 80px}
+.char[data-act=dance] .leg-l{animation:legL var(--beat,.5s) ease-in-out infinite;transform-origin:30px 100px}
+.char[data-act=dance] .leg-r{animation:legR var(--beat,.5s) ease-in-out infinite;transform-origin:50px 100px}
 .char[data-act=sit] .figure{transform:translateY(10px) scale(.96,.9)}
 .char[data-act=drink] .figure{animation:sipBob 1.6s ease-in-out infinite}
-.char[data-act=drink] .arm-r{animation:drinkArm 1.6s ease-in-out infinite;transform-origin:58px 55px}
+.char[data-act=drink] .arm-r{animation:drinkArm 1.6s ease-in-out infinite;transform-origin:68px 80px}
 .char[data-act=chat] .figure{animation:chatNod 2s ease-in-out infinite}
 .char[data-act=rest] .figure{transform:translateY(8px) rotate(-3deg)}
-.char.held .figure,.char.held .arm-l,.char.held .arm-r,.char.held .leg-l,.char.held .leg-r,.char.held .tail{animation:none!important}
+.char.held .figure,.char.held .arm-l,.char.held .arm-r,.char.held .leg-l,.char.held .leg-r{animation:none!important}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes armL{0%,100%{transform:rotate(12deg)}50%{transform:rotate(-28deg)}}
-@keyframes armR{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(28deg)}}
-@keyframes legL{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(12deg)}}
-@keyframes legR{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-12deg)}}
-@keyframes tailWag{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(12deg)}}
+@keyframes armL{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-25deg)}}
+@keyframes armR{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(25deg)}}
+@keyframes legL{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
+@keyframes legR{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-10deg)}}
 @keyframes sipBob{0%,100%{transform:translateY(6px)}40%{transform:translateY(2px) rotate(-4deg)}}
 @keyframes drinkArm{0%,100%{transform:rotate(0)}40%{transform:rotate(-40deg) translateY(-6px)}}
 @keyframes chatNod{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(4deg)}}
-.banner{position:absolute;left:50%;top:2%;transform:translateX(-50%);background:rgba(0,0,0,.5);border:1px solid rgba(233,196,106,.22);padding:5px 12px;border-radius:999px;font-size:10px;color:#7fb396;pointer-events:none;z-index:12;transition:opacity .4s;white-space:nowrap}
+.banner{position:absolute;left:50%;top:2%;transform:translateX(-50%);background:rgba(0,0,0,.55);border:1px solid rgba(198,255,0,.3);padding:5px 12px;border-radius:999px;font-size:10px;color:#d4a5ff;pointer-events:none;z-index:12;transition:opacity .4s;white-space:nowrap}
 .banner.hide{opacity:0}
-nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid rgba(233,196,106,.2);z-index:30}
-.btn{border:0;border-radius:12px;padding:8px 11px;font:700 11px/1.2 inherit;color:#1a140e;background:var(--gold);cursor:pointer;min-height:40px}
-.btn.secondary{background:#40916c;color:var(--cream)}.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(254,250,224,.25)}
+nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid rgba(198,255,0,.25);z-index:30}
+.btn{border:0;border-radius:12px;padding:8px 11px;font:700 11px/1.2 inherit;color:#1a0530;background:var(--lime);cursor:pointer;min-height:40px}
+.btn.secondary{background:#9b59b6;color:var(--cream)}.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(254,250,224,.25)}
 .btn:disabled{opacity:.35;pointer-events:none}
-.sheet{position:fixed;left:0;right:0;bottom:0;max-height:52%;background:var(--panel);border-radius:16px 16px 0 0;border:1px solid rgba(233,196,106,.25);border-bottom:0;padding:12px;padding-bottom:max(16px,env(safe-area-inset-bottom));z-index:40;transform:translateY(110%);transition:transform .28s cubic-bezier(.2,.8,.2,1);overflow:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:52%;background:var(--panel);border-radius:16px 16px 0 0;border:1px solid rgba(198,255,0,.3);border-bottom:0;padding:12px;padding-bottom:max(16px,env(safe-area-inset-bottom));z-index:40;transform:translateY(110%);transition:transform .28s cubic-bezier(.2,.8,.2,1);overflow:auto}
 .sheet.open{transform:translateY(0)}
-.sheet h2{margin:0 0 8px;font-size:13px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+.sheet h2{margin:0 0 8px;font-size:13px;letter-spacing:.06em;color:var(--lime);text-transform:uppercase}
 .sheet .close{position:absolute;top:6px;right:8px;background:0;border:0;color:var(--cream);font-size:22px;cursor:pointer;min-width:40px;min-height:40px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:7px}
 .tile{aspect-ratio:1;border-radius:11px;border:2px solid transparent;background:rgba(255,255,255,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;font-size:22px}
-.tile span{font-size:9px;font-weight:600;color:#c5d9cc}.tile.on{border-color:var(--gold);background:rgba(233,196,106,.15)}
+.tile span{font-size:9px;font-weight:600;color:#d4a5ff}.tile.on{border-color:var(--lime);background:rgba(198,255,0,.15)}
 .list{display:flex;flex-direction:column;gap:6px}
 .row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.06);border:1px solid transparent;cursor:pointer}
-.row.on{border-color:var(--gold);background:rgba(233,196,106,.12)}
-.row .meta{flex:1}.row .meta strong{display:block;font-size:12px}.row .meta small{color:#7fb396;font-size:10px}
+.row.on{border-color:var(--lime);background:rgba(198,255,0,.12)}
+.row .meta{flex:1}.row .meta strong{display:block;font-size:12px}.row .meta small{color:#d4a5ff;font-size:10px}
 </style>
 </head>
 <body>
 <div id="app">
 <header>
-<div class="logo">JUNGLE GROOVE<small>FULL-BODY SPRITES · LIVING PARTY</small></div>
+<div class="logo">JUNGLE GROOVE<small>ICON SPRITES · NEON SKATEPARK</small></div>
 <div class="mode-toggle">
 <button type="button" id="btnWatch" class="on">WATCH</button>
 <button type="button" id="btnInteract">INTERACT</button>
@@ -88,11 +97,13 @@ nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;paddi
 <div class="chip" id="trackChip">♪ Groove Safari</div>
 </header>
 <div id="world" data-light="party">
-<div class="disco"></div>
-<div class="zone" id="z-dance"><span class="label">Dance Floor</span></div>
+<div class="towers"></div>
+<div class="bowl"></div>
+<div class="graffiti"></div>
+<div class="zone" id="z-dance"><span class="label">Dance Bowl</span></div>
 <div class="zone" id="z-bar"><span class="label">Refreshments</span></div>
 <div class="zone" id="z-lounge"><span class="label">Lounge</span></div>
-<div class="banner" id="banner">SCENARIO RUNNING — 7 full-body characters</div>
+<div class="banner" id="banner">SCENARIO RUNNING — square-icon cast living on their own</div>
 <div class="cast" id="cast"></div>
 </div>
 <nav>
@@ -105,9 +116,9 @@ nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;paddi
 <div class="sheet" id="dressSheet"><button class="close" id="closeDress" type="button">×</button><h2>Costume · <span id="dressName">—</span></h2><div class="grid" id="outfitGrid"></div></div>
 <div class="sheet" id="musicSheet"><button class="close" id="closeMusic" type="button">×</button><h2>Playlist</h2><div class="list" id="trackList"></div></div>
 <div class="sheet" id="lightSheet"><button class="close" id="closeLights" type="button">×</button><h2>Lighting</h2><div class="list" id="lightList"></div></div>
-<script src="https://cdn.jsdelivr.net/gh/snowphamtom/jungle-groove@main/sprites.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/snowphamtom/jungle-groove@2c37501edb88a7c3662480f0370fb3b72ed47e40/sprites.js"></script>
 <script>
-const ZONES={dance:{bubble:["✨","💃","🔥","🪩"],x:[.18,.82],y:[.20,.46]},bar:{bubble:["😋","🥤","👍"],x:[.10,.44],y:[.66,.90]},lounge:{bubble:["💬","😄","👋"],x:[.56,.90],y:[.66,.90]}};
+const ZONES={dance:{bubble:["✨","💃","🔥","🛹"],x:[.18,.82],y:[.42,.68]},bar:{bubble:["😋","🥤","👍"],x:[.10,.44],y:[.78,.92]},lounge:{bubble:["💬","😄","👋"],x:[.56,.90],y:[.78,.92]}};
 const ANIMALS=[
 {id:"leo",name:"Leo",kind:"leo",outfit:"cape",zone:"dance"},
 {id:"zara",name:"Zara",kind:"zara",outfit:"shades",zone:"dance"},
@@ -120,11 +131,11 @@ const ANIMALS=[
 const OUTFITS=[{id:"natural",label:"Natural",icon:"🌿"},{id:"tuxedo",label:"Tuxedo",icon:"🎩"},{id:"hula",label:"Hula",icon:"🌺"},{id:"shades",label:"Shades",icon:"🕶️"},{id:"cape",label:"Cape",icon:"🦸"},{id:"disco",label:"Disco",icon:"✨"},{id:"rain",label:"Rain",icon:"🌧️"},{id:"crown",label:"Crown",icon:"👑"},{id:"chef",label:"Chef",icon:"🍳"},{id:"space",label:"Astro",icon:"🚀"}];
 function makeMelody(m){const r={major:[0,2,4,5,7,9,11,12],bright:[0,2,4,7,9,12,14,16],soft:[0,3,5,7,10,12,15,17],hype:[0,2,3,5,7,8,10,12],warm:[0,2,5,7,9,12,14,17]};return{scale:r[m]||r.major}}
 const TRACKS=[{id:"safari",name:"Groove Safari",bpm:112,tag:"Afrobeat",bars:makeMelody("major")},{id:"bamboo",name:"Bamboo Bounce",bpm:128,tag:"Upbeat",bars:makeMelody("bright")},{id:"moon",name:"Moonlit Mambo",bpm:96,tag:"Smooth",bars:makeMelody("soft")},{id:"stampede",name:"Stampede Drop",bpm:140,tag:"Wild",bars:makeMelody("hype")},{id:"river",name:"River Rhythm",bpm:104,tag:"Laid-back",bars:makeMelody("warm")}];
-const LIGHTS=[{id:"party",name:"Party Canopy",tag:"Classic"},{id:"sunset",name:"Sunset Glow",tag:"Warm"},{id:"moon",name:"Moonlit Grove",tag:"Cool"},{id:"neon",name:"Neon Vine",tag:"Electric"},{id:"day",name:"Daylight",tag:"Bright"}];
+const LIGHTS=[{id:"party",name:"Lime Sky",tag:"Neon park"},{id:"sunset",name:"Sunset Bowl",tag:"Warm"},{id:"moon",name:"Night Session",tag:"Cool"},{id:"neon",name:"Hot Neon",tag:"Pink/lime"},{id:"day",name:"Daylight",tag:"Bright"}];
 function randIn(a,b){return a+Math.random()*(b-a)}
 function zonePos(z){const Z=ZONES[z];return{x:randIn(Z.x[0],Z.x[1]),y:randIn(Z.y[0],Z.y[1])}}
 function actFor(zone){if(zone==="bar")return Math.random()<.55?"drink":"sit";if(zone==="lounge")return Math.random()<.6?"chat":"rest";return"dance"}
-function zoneAt(x,y){if(y<.55&&x>.12&&x<.88)return"dance";if(x<.48)return"bar";return"lounge"}
+function zoneAt(x,y){if(y<.72&&x>.12&&x<.88)return"dance";if(x<.48)return"bar";return"lounge"}
 const state={outfits:Object.fromEntries(ANIMALS.map(a=>[a.id,a.outfit])),zones:Object.fromEntries(ANIMALS.map(a=>[a.id,a.zone])),pos:Object.fromEntries(ANIMALS.map(a=>[a.id,zonePos(a.zone)])),selected:null,track:TRACKS[0],light:"party",muted:false,mode:"watch",holding:null,drag:null};
 const castEl=document.getElementById("cast"),worldEl=document.getElementById("world");
 function renderCast(){
@@ -138,7 +149,8 @@ function renderCast(){
     div.style.setProperty("--beat",beat);
     div.style.left=(p.x*100)+"%";div.style.top=(p.y*100)+"%";
     const prop=a._act==="drink"?"🥤":a._act==="sit"?"🪑":"";
-    div.innerHTML='<div class="bubble" data-bubble></div><div class="prop'+(prop?" show":"")+'">'+prop+'</div>'+spriteSVG(a.kind,state.outfits[a.id])+'<div class="name">'+a.name+'</div>';
+    const svg=typeof spriteSVG==="function"?spriteSVG(a.kind,state.outfits[a.id]):"";
+    div.innerHTML='<div class="bubble" data-bubble></div><div class="prop'+(prop?" show":"")+'">'+prop+'</div>'+svg+'<div class="name">'+a.name+'</div>';
     if(state.mode==="interact"){
       div.addEventListener("pointerdown",function(e){e.preventDefault();state.holding=a.id;state.selected=a.id;state.drag=a.id;div.classList.add("held","selected");div.setPointerCapture(e.pointerId);document.getElementById("dressName").textContent=a.name});
       div.addEventListener("pointermove",function(e){if(state.drag!==a.id)return;const r=worldEl.getBoundingClientRect();let x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;x=Math.max(.08,Math.min(.92,x));y=Math.max(.12,Math.min(.92,y));state.pos[a.id]={x,y};div.style.left=(x*100)+"%";div.style.top=(y*100)+"%";div.style.transition="none";document.querySelectorAll(".zone").forEach(z=>z.classList.remove("hot"));const nz=zoneAt(x,y);if(nz==="dance")document.getElementById("z-dance").classList.add("hot");if(nz==="bar")document.getElementById("z-bar").classList.add("hot");if(nz==="lounge")document.getElementById("z-lounge").classList.add("hot")});
