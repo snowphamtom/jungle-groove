@@ -9,8 +9,7 @@
 <style>
   :root {
     --leaf: #2d6a4f; --leaf-deep: #1b4332; --sun: #f4a261; --cream: #fefae0;
-    --berry: #e76f51; --sky: #90e0ef; --night: #0d1b2a;
-    --panel: rgba(15, 40, 30, 0.92); --gold: #e9c46a;
+    --night: #0d1b2a; --panel: rgba(15, 40, 30, 0.94); --gold: #e9c46a;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body {
@@ -21,81 +20,122 @@
   }
   #app { position: fixed; inset: 0; display: grid; grid-template-rows: auto 1fr auto; }
   header {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
     padding: 10px 14px; padding-top: max(10px, env(safe-area-inset-top));
-    background: linear-gradient(180deg, rgba(0,0,0,.45), transparent);
+    background: linear-gradient(180deg, rgba(0,0,0,.5), transparent);
     z-index: 20; pointer-events: none;
   }
   header > * { pointer-events: auto; }
-  .logo { font-weight: 800; letter-spacing: 0.06em; font-size: 15px; color: var(--gold); text-shadow: 0 2px 8px rgba(0,0,0,.5); }
-  .logo small { display: block; font-weight: 500; font-size: 10px; letter-spacing: 0.14em; color: #9ad5b0; }
-  .chip { background: var(--panel); border: 1px solid rgba(233,196,106,.35); border-radius: 999px; padding: 6px 12px; font-size: 12px; }
+  .logo { font-weight: 800; letter-spacing: 0.06em; font-size: 14px; color: var(--gold); text-shadow: 0 2px 8px rgba(0,0,0,.5); }
+  .logo small { display: block; font-weight: 500; font-size: 10px; letter-spacing: 0.12em; color: #9ad5b0; }
+  .chip {
+    background: var(--panel); border: 1px solid rgba(233,196,106,.35);
+    border-radius: 999px; padding: 6px 11px; font-size: 11px; white-space: nowrap;
+  }
+  .mode-toggle {
+    display: flex; border-radius: 999px; overflow: hidden;
+    border: 1px solid rgba(233,196,106,.4);
+  }
+  .mode-toggle button {
+    border: 0; background: transparent; color: #9ad5b0;
+    padding: 7px 12px; font: 700 11px/1 inherit; letter-spacing: 0.06em;
+    cursor: pointer; min-height: 36px;
+  }
+  .mode-toggle button.on { background: var(--gold); color: var(--night); }
   #stage {
     position: relative; overflow: hidden;
-    background: radial-gradient(ellipse 120% 80% at 50% 100%, #1b4332 0%, transparent 55%),
-      linear-gradient(180deg, #0d1b2a 0%, #1b4332 55%, #2d6a4f 100%);
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 100%, #1b4332 0%, transparent 55%),
+      linear-gradient(180deg, #0d1b2a 0%, #1b4332 50%, #2d6a4f 100%);
   }
   .vines {
     position: absolute; inset: 0; pointer-events: none; opacity: 0.85;
     background-image:
-      radial-gradient(circle at 8% 20%, rgba(45,106,79,.5) 0 40px, transparent 41px),
-      radial-gradient(circle at 92% 25%, rgba(45,106,79,.45) 0 50px, transparent 51px),
-      radial-gradient(circle at 15% 80%, rgba(27,67,50,.6) 0 60px, transparent 61px),
-      radial-gradient(circle at 85% 75%, rgba(27,67,50,.55) 0 55px, transparent 56px);
+      radial-gradient(circle at 8% 18%, rgba(45,106,79,.55) 0 42px, transparent 43px),
+      radial-gradient(circle at 92% 22%, rgba(45,106,79,.5) 0 52px, transparent 53px),
+      radial-gradient(circle at 12% 82%, rgba(27,67,50,.65) 0 64px, transparent 65px),
+      radial-gradient(circle at 88% 78%, rgba(27,67,50,.55) 0 58px, transparent 59px);
   }
   .floor {
-    position: absolute; left: 5%; right: 5%; bottom: 8%; height: 42%;
-    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
-    background: radial-gradient(ellipse at 50% 30%, rgba(244,162,97,.25), transparent 60%),
+    position: absolute; left: 4%; right: 4%; bottom: 6%; height: 48%;
+    border-radius: 50% 50% 0 0 / 28% 28% 0 0;
+    background:
+      radial-gradient(ellipse at 50% 28%, rgba(244,162,97,.22), transparent 62%),
       linear-gradient(180deg, #40916c 0%, #1b4332 100%);
-    box-shadow: 0 0 40px rgba(233,196,106,.15), inset 0 8px 20px rgba(0,0,0,.25);
+    box-shadow: 0 0 48px rgba(233,196,106,.14), inset 0 8px 22px rgba(0,0,0,.28);
   }
   .disco {
-    position: absolute; left: 50%; top: 6%; width: 18px; height: 18px; margin-left: -9px;
+    position: absolute; left: 50%; top: 5%; width: 20px; height: 20px; margin-left: -10px;
     border-radius: 50%;
     background: conic-gradient(#ff6b6b, #feca57, #48dbfb, #ff9ff3, #1dd1a1, #ff6b6b);
-    box-shadow: 0 0 24px rgba(255,255,255,.5); animation: spin 4s linear infinite;
+    box-shadow: 0 0 28px rgba(255,255,255,.55);
+    animation: spin 3.6s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   .spotlight {
-    position: absolute; left: 50%; top: 8%; width: 120%; height: 70%; margin-left: -60%;
-    background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.12), transparent 55%);
-    pointer-events: none; animation: pulse 2.4s ease-in-out infinite;
+    position: absolute; left: 50%; top: 6%; width: 130%; height: 72%; margin-left: -65%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.13), transparent 55%);
+    pointer-events: none; animation: pulse 2.2s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:.7} 50%{opacity:1} }
-  .cast {
-    position: absolute; left: 0; right: 0; bottom: 14%; height: 48%;
-    display: flex; align-items: flex-end; justify-content: center;
-    gap: clamp(8px, 3vw, 28px); padding: 0 4%;
-  }
+  @keyframes pulse { 0%,100%{opacity:.65} 50%{opacity:1} }
+  .cast { position: absolute; left: 0; right: 0; bottom: 10%; top: 22%; pointer-events: none; }
   .char {
-    position: relative; width: clamp(72px, 18vw, 120px); height: clamp(110px, 28vw, 170px);
-    cursor: pointer; transition: transform .15s ease;
+    position: absolute; width: 88px; height: 120px;
+    margin-left: -44px; margin-top: -60px;
+    cursor: pointer; pointer-events: auto; transition: filter .15s ease;
   }
-  .char:active { transform: scale(0.96); }
-  .char.selected { filter: drop-shadow(0 0 12px var(--gold)); }
+  .char.selected { filter: drop-shadow(0 0 14px var(--gold)); }
   .char .body {
     position: absolute; inset: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
   }
-  .char .emoji { font-size: clamp(42px, 11vw, 72px); line-height: 1; will-change: transform; }
+  .char .emoji { font-size: 52px; line-height: 1; will-change: transform; transform-origin: 50% 80%; }
   .char .name {
-    margin-top: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
-    color: var(--cream); text-shadow: 0 1px 4px rgba(0,0,0,.7);
-    background: rgba(0,0,0,.35); padding: 2px 8px; border-radius: 999px;
-  }
-  .char.dancing .emoji { animation: bounce var(--beat, 0.5s) ease-in-out infinite; }
-  .char.dancing.held .emoji { animation: none; }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
-    25% { transform: translateY(-10px) rotate(3deg) scale(1.05); }
-    50% { transform: translateY(-4px) rotate(-2deg) scale(1.02); }
-    75% { transform: translateY(-12px) rotate(4deg) scale(1.06); }
+    margin-top: 3px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--cream); text-shadow: 0 1px 4px rgba(0,0,0,.75);
+    background: rgba(0,0,0,.4); padding: 2px 7px; border-radius: 999px;
   }
   .char .outfit-tag {
-    position: absolute; top: 0; right: -4px; font-size: 18px;
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,.4));
+    position: absolute; top: 2px; right: 2px; font-size: 16px;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,.45));
   }
+  .char .bubble {
+    position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+    font-size: 14px; opacity: 0; transition: opacity .25s; pointer-events: none;
+  }
+  .char .bubble.show { opacity: 1; }
+  .char.dancing .emoji { animation: bounce var(--beat, .5s) ease-in-out infinite; }
+  .char.dancing[data-style="sway"] .emoji { animation: sway var(--beat, .5s) ease-in-out infinite; }
+  .char.dancing[data-style="spin"] .emoji { animation: spinDance calc(var(--beat, .5s) * 2) linear infinite; }
+  .char.dancing[data-style="hop"] .emoji { animation: hop var(--beat, .5s) ease-in-out infinite; }
+  .char.dancing.held .emoji { animation: none !important; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0) rotate(-5deg) scale(1); }
+    25% { transform: translateY(-12px) rotate(4deg) scale(1.06); }
+    50% { transform: translateY(-3px) rotate(-3deg); }
+    75% { transform: translateY(-14px) rotate(5deg) scale(1.07); }
+  }
+  @keyframes sway {
+    0%,100% { transform: translateX(0) rotate(-8deg); }
+    50% { transform: translateX(10px) rotate(8deg); }
+  }
+  @keyframes spinDance {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+  @keyframes hop {
+    0%,100% { transform: translateY(0) scale(1,1); }
+    40% { transform: translateY(-16px) scale(1.05,0.95); }
+    50% { transform: translateY(-16px) scale(0.95,1.05); }
+  }
+  .watch-banner {
+    position: absolute; left: 50%; top: 14%; transform: translateX(-50%);
+    background: rgba(0,0,0,.5); border: 1px solid rgba(233,196,106,.3);
+    padding: 6px 14px; border-radius: 999px; font-size: 11px; letter-spacing: 0.08em;
+    color: #9ad5b0; pointer-events: none; z-index: 12; transition: opacity .4s;
+  }
+  .watch-banner.hide { opacity: 0; }
   nav {
     display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
     padding: 10px 12px; padding-bottom: max(12px, env(safe-area-inset-bottom));
@@ -109,8 +149,9 @@
   .btn.secondary { background: #40916c; color: var(--cream); }
   .btn.ghost { background: transparent; color: var(--cream); border: 1px solid rgba(254,250,224,.3); }
   .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.4; pointer-events: none; }
   .sheet {
-    position: fixed; left: 0; right: 0; bottom: 0; max-height: 58%;
+    position: fixed; left: 0; right: 0; bottom: 0; max-height: 56%;
     background: var(--panel); border-radius: 20px 20px 0 0;
     border: 1px solid rgba(233,196,106,.3); border-bottom: 0;
     padding: 14px 14px 20px; padding-bottom: max(20px, env(safe-area-inset-bottom));
@@ -118,20 +159,19 @@
     transition: transform .28s cubic-bezier(.2,.8,.2,1); overflow: auto;
   }
   .sheet.open { transform: translateY(0); }
-  .sheet h2 { margin: 0 0 10px; font-size: 16px; letter-spacing: 0.06em; color: var(--gold); text-transform: uppercase; }
+  .sheet h2 { margin: 0 0 10px; font-size: 15px; letter-spacing: 0.06em; color: var(--gold); text-transform: uppercase; }
   .sheet .close {
-    position: absolute; top: 12px; right: 14px; background: transparent; border: 0;
+    position: absolute; top: 10px; right: 12px; background: transparent; border: 0;
     color: var(--cream); font-size: 22px; cursor: pointer; min-width: 44px; min-height: 44px;
   }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; }
   .tile {
-    aspect-ratio: 1; border-radius: 16px; border: 2px solid transparent;
+    aspect-ratio: 1; border-radius: 14px; border: 2px solid transparent;
     background: rgba(255,255,255,.08);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 4px; cursor: pointer; font-size: 28px;
+    gap: 3px; cursor: pointer; font-size: 26px;
   }
   .tile span { font-size: 10px; font-weight: 600; color: #cfe0d4; }
-  .tile:active { transform: scale(0.96); }
   .tile.on { border-color: var(--gold); background: rgba(233,196,106,.18); }
   .music-list { display: flex; flex-direction: column; gap: 8px; }
   .track {
@@ -139,26 +179,19 @@
     background: rgba(255,255,255,.06); border: 1px solid transparent; cursor: pointer;
   }
   .track.on { border-color: var(--gold); background: rgba(233,196,106,.15); }
-  .track .ico { font-size: 22px; }
   .track .meta { flex: 1; }
   .track .meta strong { display: block; font-size: 14px; }
   .track .meta small { color: #9ad5b0; font-size: 11px; }
-  .hint {
-    position: absolute; left: 50%; top: 18%; transform: translateX(-50%);
-    background: rgba(0,0,0,.45); padding: 8px 14px; border-radius: 999px;
-    font-size: 12px; color: #cfe0d4; pointer-events: none; transition: opacity .4s;
-  }
-  .hint.fade { opacity: 0; }
-  .mode {
-    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #9ad5b0; z-index: 15;
-  }
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <div class="logo">JUNGLE GROOVE<small>DRESS · DANCE · ROAM</small></div>
+    <div class="mode-toggle">
+      <button type="button" id="btnWatch" class="on">WATCH</button>
+      <button type="button" id="btnInteract">INTERACT</button>
+    </div>
     <div class="chip" id="trackChip">♪ Groove Safari</div>
   </header>
   <div id="stage">
@@ -166,101 +199,117 @@
     <div class="disco"></div>
     <div class="spotlight"></div>
     <div class="floor"></div>
-    <div class="mode" id="modeLabel">Dance Party · Free Roam</div>
-    <div class="hint" id="hint">Tap a character to dress them · They dance until you hold them</div>
+    <div class="watch-banner" id="watchBanner">PARTY IN PROGRESS — tap INTERACT to join</div>
     <div class="cast" id="cast"></div>
   </div>
-  <nav>
-    <button class="btn" id="btnDress" type="button">👗 Dress Up</button>
+  <nav id="dock">
+    <button class="btn" id="btnDress" type="button" disabled>👗 Dress Up</button>
     <button class="btn secondary" id="btnMusic" type="button">🎵 Music</button>
-    <button class="btn ghost" id="btnParty" type="button">🎉 Party!</button>
     <button class="btn ghost" id="btnMute" type="button">🔇 Mute</button>
   </nav>
 </div>
 <div class="sheet" id="dressSheet">
   <button class="close" id="closeDress" type="button" aria-label="Close">×</button>
   <h2>Dress <span id="dressName">—</span></h2>
-  <p style="margin:0 0 12px;font-size:13px;color:#9ad5b0">Toca-style outfits · pick a look, then watch them hit the floor</p>
+  <p style="margin:0 0 10px;font-size:12px;color:#9ad5b0">They're already at the party — change their look anytime</p>
   <div class="grid" id="outfitGrid"></div>
 </div>
 <div class="sheet" id="musicSheet">
   <button class="close" id="closeMusic" type="button" aria-label="Close">×</button>
   <h2>Dance Floor Playlist</h2>
-  <p style="margin:0 0 12px;font-size:13px;color:#9ad5b0">Change the beat — animals match the tempo</p>
+  <p style="margin:0 0 10px;font-size:12px;color:#9ad5b0">Change the beat — the whole floor follows</p>
   <div class="music-list" id="trackList"></div>
 </div>
 <script>
 const ANIMALS = [
-  { id: "leo", name: "Leo", base: "🦁" },
-  { id: "zara", name: "Zara", base: "🦓" },
-  { id: "momo", name: "Momo", base: "🐵" },
-  { id: "pip", name: "Pip", base: "🦜" },
-  { id: "tiko", name: "Tiko", base: "🐯" },
-  { id: "nala", name: "Nala", base: "🦒" },
+  { id: "leo",  name: "Leo",  base: "🦁", outfit: "cape",   style: "bounce", x: 0.28, y: 0.55 },
+  { id: "zara", name: "Zara", base: "🦓", outfit: "shades", style: "sway",   x: 0.42, y: 0.62 },
+  { id: "momo", name: "Momo", base: "🐵", outfit: "disco",  style: "hop",    x: 0.55, y: 0.50 },
+  { id: "pip",  name: "Pip",  base: "🦜", outfit: "crown",  style: "spin",   x: 0.68, y: 0.58 },
+  { id: "tiko", name: "Tiko", base: "🐯", outfit: "tuxedo", style: "bounce", x: 0.35, y: 0.72 },
+  { id: "nala", name: "Nala", base: "🦒", outfit: "hula",   style: "sway",   x: 0.62, y: 0.70 },
 ];
 const OUTFITS = [
-  { id: "none", label: "Natural", icon: "🌿" },
-  { id: "tuxedo", label: "Tuxedo", icon: "🎩" },
-  { id: "hula", label: "Hula", icon: "🌺" },
-  { id: "shades", label: "Shades", icon: "🕶️" },
-  { id: "cape", label: "Hero Cape", icon: "🦸" },
-  { id: "disco", label: "Disco", icon: "✨" },
-  { id: "rain", label: "Raincoat", icon: "🌧️" },
-  { id: "crown", label: "Crown", icon: "👑" },
-  { id: "chef", label: "Chef", icon: "🍳" },
-  { id: "space", label: "Astro", icon: "🚀" },
+  { id: "natural", label: "Natural", icon: "🌿" },
+  { id: "tuxedo",  label: "Tuxedo",  icon: "🎩" },
+  { id: "hula",    label: "Hula",    icon: "🌺" },
+  { id: "shades",  label: "Shades",  icon: "🕶️" },
+  { id: "cape",    label: "Hero Cape", icon: "🦸" },
+  { id: "disco",   label: "Disco",   icon: "✨" },
+  { id: "rain",    label: "Raincoat", icon: "🌧️" },
+  { id: "crown",   label: "Crown",   icon: "👑" },
+  { id: "chef",    label: "Chef",    icon: "🍳" },
+  { id: "space",   label: "Astro",   icon: "🚀" },
 ];
 function makeMelody(mood) {
   const roots = {
-    major: [0, 2, 4, 5, 7, 9, 11, 12],
-    bright: [0, 2, 4, 7, 9, 12, 14, 16],
-    soft: [0, 3, 5, 7, 10, 12, 15, 17],
-    hype: [0, 2, 3, 5, 7, 8, 10, 12],
-    warm: [0, 2, 5, 7, 9, 12, 14, 17],
+    major:  [0,2,4,5,7,9,11,12],
+    bright: [0,2,4,7,9,12,14,16],
+    soft:   [0,3,5,7,10,12,15,17],
+    hype:   [0,2,3,5,7,8,10,12],
+    warm:   [0,2,5,7,9,12,14,17],
   };
   return { scale: roots[mood] || roots.major };
 }
 const TRACKS = [
-  { id: "safari", name: "Groove Safari", bpm: 112, tag: "Afrobeat bounce", bars: makeMelody("major") },
-  { id: "bamboo", name: "Bamboo Bounce", bpm: 128, tag: "Upbeat pop", bars: makeMelody("bright") },
-  { id: "moon", name: "Moonlit Mambo", bpm: 96, tag: "Smooth night", bars: makeMelody("soft") },
-  { id: "stampede", name: "Stampede Drop", bpm: 140, tag: "Wild energy", bars: makeMelody("hype") },
-  { id: "river", name: "River Rhythm", bpm: 104, tag: "Laid-back groove", bars: makeMelody("warm") },
+  { id: "safari",   name: "Groove Safari",  bpm: 112, tag: "Afrobeat bounce", bars: makeMelody("major") },
+  { id: "bamboo",   name: "Bamboo Bounce",  bpm: 128, tag: "Upbeat pop",      bars: makeMelody("bright") },
+  { id: "moon",     name: "Moonlit Mambo",  bpm: 96,  tag: "Smooth night",    bars: makeMelody("soft") },
+  { id: "stampede", name: "Stampede Drop",  bpm: 140, tag: "Wild energy",     bars: makeMelody("hype") },
+  { id: "river",    name: "River Rhythm",   bpm: 104, tag: "Laid-back groove",bars: makeMelody("warm") },
 ];
+const BUBBLES = ["✨", "🎉", "💃", "🕺", "⭐", "🔥", "🎶", "💛"];
 const state = {
-  outfits: Object.fromEntries(ANIMALS.map(a => [a.id, "none"])),
+  outfits: Object.fromEntries(ANIMALS.map(a => [a.id, a.outfit])),
+  pos: Object.fromEntries(ANIMALS.map(a => [a.id, { x: a.x, y: a.y }])),
+  styles: Object.fromEntries(ANIMALS.map(a => [a.id, a.style])),
   selected: null,
   track: TRACKS[0],
   muted: false,
   party: true,
+  mode: "watch",
   holding: null,
 };
 const castEl = document.getElementById("cast");
+const stageEl = document.getElementById("stage");
+function outfitIcon(id) {
+  const o = OUTFITS.find(x => x.id === id);
+  return o && o.id !== "natural" ? o.icon : "";
+}
 function renderCast() {
+  const beat = (60 / state.track.bpm) + "s";
   castEl.innerHTML = "";
-  ANIMALS.forEach((a, i) => {
-    const outfit = OUTFITS.find(o => o.id === state.outfits[a.id]) || OUTFITS[0];
+  ANIMALS.forEach(function(a) {
+    const p = state.pos[a.id];
     const div = document.createElement("div");
     div.className = "char dancing" + (state.selected === a.id ? " selected" : "");
     div.dataset.id = a.id;
-    div.style.setProperty("--beat", (60 / state.track.bpm) + "s");
-    div.style.animationDelay = (i * 0.07) + "s";
-    div.innerHTML = '<div class="body"><div class="outfit-tag">' +
-      (outfit.id === "none" ? "" : outfit.icon) +
-      '</div><div class="emoji">' + a.base + '</div><div class="name">' + a.name + '</div></div>';
-    div.addEventListener("pointerdown", function(e) {
-      e.preventDefault();
-      state.holding = a.id;
-      state.selected = a.id;
-      div.classList.add("held", "selected");
-      Array.prototype.forEach.call(castEl.children, function(c) {
-        if (c !== div) c.classList.remove("selected");
+    div.dataset.style = state.styles[a.id];
+    div.style.setProperty("--beat", beat);
+    div.style.left = (p.x * 100) + "%";
+    div.style.top = (p.y * 100) + "%";
+    div.innerHTML =
+      '<div class="bubble" data-bubble></div>' +
+      '<div class="body">' +
+        '<div class="outfit-tag">' + outfitIcon(state.outfits[a.id]) + '</div>' +
+        '<div class="emoji">' + a.base + '</div>' +
+        '<div class="name">' + a.name + '</div>' +
+      '</div>';
+    if (state.mode === "interact") {
+      div.addEventListener("pointerdown", function(e) {
+        e.preventDefault();
+        state.holding = a.id;
+        state.selected = a.id;
+        div.classList.add("held", "selected");
+        Array.prototype.forEach.call(castEl.children, function(c) {
+          if (c !== div) c.classList.remove("selected");
+        });
+        document.getElementById("dressName").textContent = a.name;
       });
-      document.getElementById("dressName").textContent = a.name;
-    });
-    div.addEventListener("pointerup", function() { releaseHold(div); });
-    div.addEventListener("pointerleave", function() { releaseHold(div); });
-    div.addEventListener("pointercancel", function() { releaseHold(div); });
+      div.addEventListener("pointerup", function() { releaseHold(div); });
+      div.addEventListener("pointerleave", function() { releaseHold(div); });
+      div.addEventListener("pointercancel", function() { releaseHold(div); });
+    }
     castEl.appendChild(div);
   });
 }
@@ -268,6 +317,37 @@ function releaseHold(div) {
   state.holding = null;
   if (div) div.classList.remove("held");
 }
+const STYLES = ["bounce", "sway", "spin", "hop"];
+function partyTick() {
+  ANIMALS.forEach(function(a) {
+    if (state.holding === a.id) return;
+    const p = state.pos[a.id];
+    p.x += (Math.random() - 0.5) * 0.012;
+    p.y += (Math.random() - 0.5) * 0.010;
+    p.x = Math.max(0.18, Math.min(0.82, p.x));
+    p.y = Math.max(0.42, Math.min(0.82, p.y));
+  });
+  if (Math.random() < 0.35) {
+    const a = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
+    if (state.holding !== a.id) {
+      state.styles[a.id] = STYLES[Math.floor(Math.random() * STYLES.length)];
+    }
+  }
+  if (Math.random() < 0.4) {
+    const nodes = castEl.querySelectorAll(".char");
+    if (nodes.length) {
+      const n = nodes[Math.floor(Math.random() * nodes.length)];
+      const b = n.querySelector("[data-bubble]");
+      if (b) {
+        b.textContent = BUBBLES[Math.floor(Math.random() * BUBBLES.length)];
+        b.classList.add("show");
+        setTimeout(function() { b.classList.remove("show"); }, 900);
+      }
+    }
+  }
+  renderCast();
+}
+setInterval(partyTick, 1600);
 const dressSheet = document.getElementById("dressSheet");
 const musicSheet = document.getElementById("musicSheet");
 const outfitGrid = document.getElementById("outfitGrid");
@@ -303,7 +383,7 @@ function renderTracks() {
     const row = document.createElement("button");
     row.type = "button";
     row.className = "track" + (state.track.id === tr.id ? " on" : "");
-    row.innerHTML = '<div class="ico">🎵</div><div class="meta"><strong>' +
+    row.innerHTML = '<div style="font-size:22px">🎵</div><div class="meta"><strong>' +
       tr.name + '</strong><small>' + tr.tag + ' · ' + tr.bpm + ' BPM</small></div>';
     row.addEventListener("click", function() {
       state.track = tr;
@@ -335,8 +415,7 @@ class PartyAudio {
     this.stop();
     if (state.muted) return;
     this.playing = true;
-    const bpm = track.bpm;
-    const interval = (60 / bpm) * 1000 / 2;
+    const interval = (60 / track.bpm) * 1000 / 2;
     const scale = track.bars.scale;
     const base = 110;
     const self = this;
@@ -346,9 +425,9 @@ class PartyAudio {
       const t = self.ctx.currentTime;
       const degree = scale[self.step % scale.length];
       const freq = base * Math.pow(2, degree / 12);
-      if (self.step % 4 === 0) self.hit(t, 60, 0.08, "square", 0.12);
-      if (self.step % 4 === 2) self.noise(t, 0.05, 0.06);
-      if (self.step % 2 === 0) self.hit(t, freq, 0.12, "triangle", 0.05);
+      if (self.step % 4 === 0) self.hit(t, 60, 0.08, "square", 0.11);
+      if (self.step % 4 === 2) self.noise(t, 0.05, 0.05);
+      if (self.step % 2 === 0) self.hit(t, freq, 0.11, "triangle", 0.045);
       if (self.step % 8 === 6) self.hit(t, freq * 2, 0.06, "sine", 0.03);
       self.step++;
     }, interval);
@@ -381,7 +460,23 @@ function restartMusic() {
   if (state.party && !state.muted) audio.start(state.track);
   else audio.stop();
 }
+function setMode(mode) {
+  state.mode = mode;
+  document.getElementById("btnWatch").classList.toggle("on", mode === "watch");
+  document.getElementById("btnInteract").classList.toggle("on", mode === "interact");
+  document.getElementById("btnDress").disabled = mode !== "interact";
+  document.getElementById("watchBanner").classList.toggle("hide", mode === "interact");
+  if (mode === "watch") {
+    state.selected = null;
+    state.holding = null;
+    closeSheets();
+  }
+  renderCast();
+}
+document.getElementById("btnWatch").addEventListener("click", function() { setMode("watch"); });
+document.getElementById("btnInteract").addEventListener("click", function() { setMode("interact"); });
 document.getElementById("btnDress").addEventListener("click", function() {
+  if (state.mode !== "interact") return;
   if (!state.selected) state.selected = ANIMALS[0].id;
   var a = ANIMALS.find(function(x) { return x.id === state.selected; });
   document.getElementById("dressName").textContent = a ? a.name : "—";
@@ -394,30 +489,22 @@ document.getElementById("btnMusic").addEventListener("click", function() {
 });
 document.getElementById("closeDress").addEventListener("click", closeSheets);
 document.getElementById("closeMusic").addEventListener("click", closeSheets);
-document.getElementById("btnParty").addEventListener("click", function() {
-  state.party = !state.party;
-  document.getElementById("btnParty").textContent = state.party ? "🎉 Party!" : "⏸ Pause";
-  document.getElementById("modeLabel").textContent =
-    state.party ? "Dance Party · Free Roam" : "Chill Mode · Free Roam";
-  Array.prototype.forEach.call(castEl.children, function(c) {
-    if (state.party) c.classList.add("dancing");
-    else c.classList.remove("dancing");
-  });
-  restartMusic();
-});
 document.getElementById("btnMute").addEventListener("click", function() {
   state.muted = !state.muted;
   document.getElementById("btnMute").textContent = state.muted ? "🔊 Unmute" : "🔇 Mute";
   restartMusic();
 });
-document.body.addEventListener("pointerdown", function() {
+function bootAudio() {
   audio.ensure();
-  if (state.party && !state.muted && !audio.playing) audio.start(state.track);
-}, { once: true });
-setTimeout(function() { document.getElementById("hint").classList.add("fade"); }, 4500);
+  if (!audio.playing && !state.muted) audio.start(state.track);
+}
+document.body.addEventListener("pointerdown", bootAudio, { once: true });
+setTimeout(function() { try { bootAudio(); } catch (e) {} }, 300);
+window.addEventListener("resize", function() { renderCast(); });
 renderCast();
 renderOutfits();
 renderTracks();
+setMode("watch");
 </script>
 </body>
 </html>
