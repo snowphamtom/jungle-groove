@@ -1,4 +1,4 @@
-name: pages
+name: Deploy Pages
 on:
   push:
     branches: [main]
@@ -14,18 +14,13 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Stage static root
-        run: |
-          mkdir -p _site
-          cp index.html _site/
-          cp MEASURED_WORLD.md world_matrix.json _site/ 2>/dev/null || true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
-      - id: deploy
+          path: .
+      - id: deployment
         uses: actions/deploy-pages@v4
