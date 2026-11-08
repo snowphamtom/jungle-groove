@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Jungle Groove — Icon Party</title>
+<title>Jungle Groove — Arcade Idle Party</title>
 <style>
-:root{--cream:#fefae0;--gold:#e9c46a;--panel:rgba(20,8,40,.95);--lime:#c6ff00;--purple:#5b2c6f}
+:root{--cream:#fefae0;--gold:#e9c46a;--panel:rgba(20,8,40,.95);--lime:#c6ff00}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,sans-serif;background:#1a0530;color:var(--cream);touch-action:manipulation;user-select:none}
 #app{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto}
@@ -23,50 +23,65 @@ header>*{pointer-events:auto}
 #world[data-light=neon]{background:linear-gradient(180deg,#c6ff00 0%,#c6ff00 28%,#ff00aa 28%,#1a0530 100%)}
 #world[data-light=day]{background:linear-gradient(180deg,#87ceeb 0%,#87ceeb 28%,#6c3483 28%,#4a235a 100%)}
 .towers{position:absolute;left:0;right:0;top:0;height:32%;pointer-events:none;opacity:.9}
-.towers:before,.towers:after{content:"";position:absolute;bottom:0;width:22%;background:linear-gradient(180deg,#4a3f6b,#2d2540);box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.towers:before,.towers:after{content:"";position:absolute;bottom:0;width:22%;background:linear-gradient(180deg,#4a3f6b,#2d2540)}
 .towers:before{left:18%;height:100%;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%)}
 .towers:after{right:18%;height:92%;clip-path:polygon(0 0,100% 10%,100% 100%,0 100%)}
 .bowl{position:absolute;left:8%;right:8%;top:34%;bottom:18%;border-radius:40% 40% 20% 20%;background:radial-gradient(ellipse at 50% 30%,#6c5b7b 0%,#4a3f6b 40%,#3d3558 100%);border:3px solid rgba(198,255,0,.25);box-shadow:inset 0 20px 40px rgba(0,0,0,.35);pointer-events:none}
-.bowl:after{content:"";position:absolute;inset:12% 18% 20%;border-radius:50%;border:2px dashed rgba(255,0,170,.3)}
-.graffiti{position:absolute;inset:0;pointer-events:none;opacity:.55;background:
-  radial-gradient(circle at 20% 70%,#ff00aa 0%,transparent 8%),
-  radial-gradient(circle at 80% 65%,#00f5ff 0%,transparent 10%),
-  radial-gradient(circle at 50% 80%,#c6ff00 0%,transparent 12%),
-  radial-gradient(circle at 30% 50%,#ff6b35 0%,transparent 6%)}
+.graffiti{position:absolute;inset:0;pointer-events:none;opacity:.5;background:radial-gradient(circle at 20% 70%,#ff00aa 0%,transparent 8%),radial-gradient(circle at 80% 65%,#00f5ff 0%,transparent 10%),radial-gradient(circle at 50% 80%,#c6ff00 0%,transparent 12%)}
 .zone{position:absolute;border-radius:18px;border:1px dashed rgba(254,250,224,.2);display:flex;align-items:flex-start;justify-content:center;padding-top:5px;pointer-events:none}
 .zone .label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(254,250,224,.55);font-weight:700}
 .zone.hot{border-color:var(--lime);background:rgba(198,255,0,.12)}
-#z-dance{left:10%;right:10%;top:36%;height:38%}
-#z-bar{left:5%;width:42%;bottom:4%;height:22%}
-#z-lounge{right:5%;width:42%;bottom:4%;height:22%}
+#z-dance{left:10%;right:10%;top:36%;height:38%}#z-bar{left:5%;width:42%;bottom:4%;height:22%}#z-lounge{right:5%;width:42%;bottom:4%;height:22%}
 .cast{position:absolute;inset:0;pointer-events:none}
-.char{position:absolute;width:84px;height:116px;margin-left:-42px;margin-top:-58px;transition:left .85s ease,top .85s ease,filter .15s;pointer-events:none}
+.char{position:absolute;width:84px;height:116px;margin-left:-42px;margin-top:-58px;transition:left .9s ease,top .9s ease,filter .15s;pointer-events:none}
 .interact .char{pointer-events:auto;cursor:grab}
 .char.selected{filter:drop-shadow(0 0 12px var(--lime));z-index:5}
 .char .sprite{width:100%;height:100%;display:block;overflow:visible}
 .char .name{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:rgba(0,0,0,.55);padding:1px 6px;border-radius:999px;white-space:nowrap}
-.char .bubble{position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:14px;opacity:0;transition:opacity .25s}
+.char .bubble{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:14px;opacity:0;transition:opacity .25s}
 .char .bubble.show{opacity:1}
 .char .prop{position:absolute;top:18%;left:6%;font-size:15px;opacity:0;z-index:2}.char .prop.show{opacity:1}
-.char[data-act=dance] .figure{animation:bob var(--beat,.5s) ease-in-out infinite}
-.char[data-act=dance] .arm-l{animation:armL var(--beat,.5s) ease-in-out infinite;transform-origin:12px 80px}
-.char[data-act=dance] .arm-r{animation:armR var(--beat,.5s) ease-in-out infinite;transform-origin:68px 80px}
-.char[data-act=dance] .leg-l{animation:legL var(--beat,.5s) ease-in-out infinite;transform-origin:30px 100px}
-.char[data-act=dance] .leg-r{animation:legR var(--beat,.5s) ease-in-out infinite;transform-origin:50px 100px}
-.char[data-act=sit] .figure{transform:translateY(10px) scale(.96,.9)}
-.char[data-act=drink] .figure{animation:sipBob 1.6s ease-in-out infinite}
-.char[data-act=drink] .arm-r{animation:drinkArm 1.6s ease-in-out infinite;transform-origin:68px 80px}
-.char[data-act=chat] .figure{animation:chatNod 2s ease-in-out infinite}
-.char[data-act=rest] .figure{transform:translateY(8px) rotate(-3deg)}
+.char .figure{transform-origin:40px 100px;animation:arcadeBreath 2.4s ease-in-out infinite}
+@keyframes arcadeBreath{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-2px) scale(1.02,.98)}}
+.char[data-act=idle] .figure{animation:idleCycle 3.2s ease-in-out infinite}
+.char[data-act=idle] .arm-l{animation:idleArmL 3.2s ease-in-out infinite;transform-origin:12px 78px}
+.char[data-act=idle] .arm-r{animation:idleArmR 3.2s ease-in-out infinite;transform-origin:68px 78px}
+.char[data-act=idle] .leg-l{animation:idleLeg 3.2s ease-in-out infinite;transform-origin:30px 100px}
+.char[data-act=idle] .leg-r{animation:idleLeg 3.2s ease-in-out infinite reverse;transform-origin:50px 100px}
+@keyframes idleCycle{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-3px) rotate(-1.5deg)}50%{transform:translateY(-1px) rotate(0)}75%{transform:translateY(-3px) rotate(1.5deg)}}
+@keyframes idleArmL{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-12deg) translateY(-2px)}}
+@keyframes idleArmR{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(12deg) translateY(-2px)}}
+@keyframes idleLeg{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+.char[data-act=dance] .figure{animation:danceBob var(--beat,.5s) ease-in-out infinite}
+.char[data-act=dance] .arm-l{animation:danceArmL var(--beat,.5s) ease-in-out infinite;transform-origin:12px 78px}
+.char[data-act=dance] .arm-r{animation:danceArmR var(--beat,.5s) ease-in-out infinite;transform-origin:68px 78px}
+.char[data-act=dance] .leg-l{animation:danceLegL var(--beat,.5s) ease-in-out infinite;transform-origin:30px 100px}
+.char[data-act=dance] .leg-r{animation:danceLegR var(--beat,.5s) ease-in-out infinite;transform-origin:50px 100px}
+@keyframes danceBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+@keyframes danceArmL{0%,100%{transform:rotate(15deg)}50%{transform:rotate(-35deg)}}
+@keyframes danceArmR{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(35deg)}}
+@keyframes danceLegL{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(14deg)}}
+@keyframes danceLegR{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-14deg)}}
+.char[data-act=rest] .figure{animation:restIdle 4s ease-in-out infinite;transform-origin:40px 100px}
+.char[data-act=rest] .arm-l{animation:restArm 4s ease-in-out infinite;transform-origin:12px 78px}
+.char[data-act=rest] .arm-r{animation:restArm 4s ease-in-out infinite reverse;transform-origin:68px 78px}
+@keyframes restIdle{0%,100%{transform:translateY(8px) scale(1,.94) rotate(-2deg)}50%{transform:translateY(6px) scale(1.01,.93) rotate(2deg)}}
+@keyframes restArm{0%,100%{transform:rotate(20deg)}50%{transform:rotate(8deg)}}
+.char[data-act=sit] .figure{animation:sitIdle 3.5s ease-in-out infinite}
+@keyframes sitIdle{0%,100%{transform:translateY(12px) scale(1,.92)}50%{transform:translateY(10px) scale(1.02,.91)}}
+.char[data-act=drink] .figure{animation:drinkBody 1.8s ease-in-out infinite}
+.char[data-act=drink] .arm-r{animation:drinkArm 1.8s ease-in-out infinite;transform-origin:68px 78px}
+@keyframes drinkBody{0%,100%{transform:translateY(8px)}40%{transform:translateY(4px) rotate(-5deg)}60%{transform:translateY(4px) rotate(-3deg)}}
+@keyframes drinkArm{0%,100%{transform:rotate(0)}35%{transform:rotate(-50deg) translateY(-8px)}55%{transform:rotate(-45deg) translateY(-6px)}}
+.char[data-act=chat] .figure{animation:chatCycle 2.2s ease-in-out infinite}
+.char[data-act=chat] .arm-r{animation:chatGesture 2.2s ease-in-out infinite;transform-origin:68px 78px}
+@keyframes chatCycle{0%,100%{transform:rotate(-2deg) translateY(0)}30%{transform:rotate(3deg) translateY(-2px)}60%{transform:rotate(-1deg) translateY(-1px)}}
+@keyframes chatGesture{0%,100%{transform:rotate(0)}40%{transform:rotate(-25deg) translateY(-4px)}70%{transform:rotate(10deg)}}
+.char[data-act=wave] .figure{animation:waveBody .8s ease-in-out infinite}
+.char[data-act=wave] .arm-r{animation:waveArm .5s ease-in-out infinite;transform-origin:68px 78px}
+@keyframes waveBody{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg)}}
+@keyframes waveArm{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(-70deg)}}
 .char.held .figure,.char.held .arm-l,.char.held .arm-r,.char.held .leg-l,.char.held .leg-r{animation:none!important}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes armL{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-25deg)}}
-@keyframes armR{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(25deg)}}
-@keyframes legL{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}
-@keyframes legR{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-10deg)}}
-@keyframes sipBob{0%,100%{transform:translateY(6px)}40%{transform:translateY(2px) rotate(-4deg)}}
-@keyframes drinkArm{0%,100%{transform:rotate(0)}40%{transform:rotate(-40deg) translateY(-6px)}}
-@keyframes chatNod{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(4deg)}}
 .banner{position:absolute;left:50%;top:2%;transform:translateX(-50%);background:rgba(0,0,0,.55);border:1px solid rgba(198,255,0,.3);padding:5px 12px;border-radius:999px;font-size:10px;color:#d4a5ff;pointer-events:none;z-index:12;transition:opacity .4s;white-space:nowrap}
 .banner.hide{opacity:0}
 nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid rgba(198,255,0,.25);z-index:30}
@@ -89,7 +104,7 @@ nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;paddi
 <body>
 <div id="app">
 <header>
-<div class="logo">JUNGLE GROOVE<small>ICON SPRITES · NEON SKATEPARK</small></div>
+<div class="logo">JUNGLE GROOVE<small>ARCADE IDLE · LIVING CAST</small></div>
 <div class="mode-toggle">
 <button type="button" id="btnWatch" class="on">WATCH</button>
 <button type="button" id="btnInteract">INTERACT</button>
@@ -97,13 +112,11 @@ nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;paddi
 <div class="chip" id="trackChip">♪ Groove Safari</div>
 </header>
 <div id="world" data-light="party">
-<div class="towers"></div>
-<div class="bowl"></div>
-<div class="graffiti"></div>
+<div class="towers"></div><div class="bowl"></div><div class="graffiti"></div>
 <div class="zone" id="z-dance"><span class="label">Dance Bowl</span></div>
 <div class="zone" id="z-bar"><span class="label">Refreshments</span></div>
 <div class="zone" id="z-lounge"><span class="label">Lounge</span></div>
-<div class="banner" id="banner">SCENARIO RUNNING — square-icon cast living on their own</div>
+<div class="banner" id="banner">ARCADE IDLES RUNNING — fighters keep moving</div>
 <div class="cast" id="cast"></div>
 </div>
 <nav>
@@ -118,50 +131,22 @@ nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;paddi
 <div class="sheet" id="lightSheet"><button class="close" id="closeLights" type="button">×</button><h2>Lighting</h2><div class="list" id="lightList"></div></div>
 <script src="https://cdn.jsdelivr.net/gh/snowphamtom/jungle-groove@2c37501edb88a7c3662480f0370fb3b72ed47e40/sprites.js"></script>
 <script>
-const ZONES={dance:{bubble:["✨","💃","🔥","🛹"],x:[.18,.82],y:[.42,.68]},bar:{bubble:["😋","🥤","👍"],x:[.10,.44],y:[.78,.92]},lounge:{bubble:["💬","😄","👋"],x:[.56,.90],y:[.78,.92]}};
-const ANIMALS=[
-{id:"leo",name:"Leo",kind:"leo",outfit:"cape",zone:"dance"},
-{id:"zara",name:"Zara",kind:"zara",outfit:"shades",zone:"dance"},
-{id:"momo",name:"Momo",kind:"momo",outfit:"disco",zone:"bar"},
-{id:"pip",name:"Pip",kind:"pip",outfit:"crown",zone:"lounge"},
-{id:"tiko",name:"Tiko",kind:"tiko",outfit:"tuxedo",zone:"dance"},
-{id:"nala",name:"Nala",kind:"nala",outfit:"hula",zone:"lounge"},
-{id:"bongo",name:"Bongo",kind:"bongo",outfit:"natural",zone:"bar"}
-];
+const ZONES={dance:{bubble:["✨","💃","🔥","🛹"],x:[.18,.82],y:[.42,.68],acts:["dance","idle","wave"]},bar:{bubble:["😋","🥤","👍"],x:[.10,.44],y:[.78,.92],acts:["drink","sit","idle"]},lounge:{bubble:["💬","😄","👋"],x:[.56,.90],y:[.78,.92],acts:["chat","rest","idle","wave"]}};
+const ANIMALS=[{id:"leo",name:"Leo",kind:"leo",outfit:"cape",zone:"dance"},{id:"zara",name:"Zara",kind:"zara",outfit:"shades",zone:"dance"},{id:"momo",name:"Momo",kind:"momo",outfit:"disco",zone:"bar"},{id:"pip",name:"Pip",kind:"pip",outfit:"crown",zone:"lounge"},{id:"tiko",name:"Tiko",kind:"tiko",outfit:"tuxedo",zone:"dance"},{id:"nala",name:"Nala",kind:"nala",outfit:"hula",zone:"lounge"},{id:"bongo",name:"Bongo",kind:"bongo",outfit:"natural",zone:"bar"}];
 const OUTFITS=[{id:"natural",label:"Natural",icon:"🌿"},{id:"tuxedo",label:"Tuxedo",icon:"🎩"},{id:"hula",label:"Hula",icon:"🌺"},{id:"shades",label:"Shades",icon:"🕶️"},{id:"cape",label:"Cape",icon:"🦸"},{id:"disco",label:"Disco",icon:"✨"},{id:"rain",label:"Rain",icon:"🌧️"},{id:"crown",label:"Crown",icon:"👑"},{id:"chef",label:"Chef",icon:"🍳"},{id:"space",label:"Astro",icon:"🚀"}];
 function makeMelody(m){const r={major:[0,2,4,5,7,9,11,12],bright:[0,2,4,7,9,12,14,16],soft:[0,3,5,7,10,12,15,17],hype:[0,2,3,5,7,8,10,12],warm:[0,2,5,7,9,12,14,17]};return{scale:r[m]||r.major}}
 const TRACKS=[{id:"safari",name:"Groove Safari",bpm:112,tag:"Afrobeat",bars:makeMelody("major")},{id:"bamboo",name:"Bamboo Bounce",bpm:128,tag:"Upbeat",bars:makeMelody("bright")},{id:"moon",name:"Moonlit Mambo",bpm:96,tag:"Smooth",bars:makeMelody("soft")},{id:"stampede",name:"Stampede Drop",bpm:140,tag:"Wild",bars:makeMelody("hype")},{id:"river",name:"River Rhythm",bpm:104,tag:"Laid-back",bars:makeMelody("warm")}];
 const LIGHTS=[{id:"party",name:"Lime Sky",tag:"Neon park"},{id:"sunset",name:"Sunset Bowl",tag:"Warm"},{id:"moon",name:"Night Session",tag:"Cool"},{id:"neon",name:"Hot Neon",tag:"Pink/lime"},{id:"day",name:"Daylight",tag:"Bright"}];
 function randIn(a,b){return a+Math.random()*(b-a)}
 function zonePos(z){const Z=ZONES[z];return{x:randIn(Z.x[0],Z.x[1]),y:randIn(Z.y[0],Z.y[1])}}
-function actFor(zone){if(zone==="bar")return Math.random()<.55?"drink":"sit";if(zone==="lounge")return Math.random()<.6?"chat":"rest";return"dance"}
+function pickAct(zone){const r=Math.random();if(zone==="dance"){if(r<.55)return"dance";if(r<.85)return"idle";return"wave"}if(zone==="bar"){if(r<.4)return"drink";if(r<.7)return"sit";return"idle"}if(r<.4)return"chat";if(r<.65)return"rest";if(r<.85)return"idle";return"wave"}
 function zoneAt(x,y){if(y<.72&&x>.12&&x<.88)return"dance";if(x<.48)return"bar";return"lounge"}
 const state={outfits:Object.fromEntries(ANIMALS.map(a=>[a.id,a.outfit])),zones:Object.fromEntries(ANIMALS.map(a=>[a.id,a.zone])),pos:Object.fromEntries(ANIMALS.map(a=>[a.id,zonePos(a.zone)])),selected:null,track:TRACKS[0],light:"party",muted:false,mode:"watch",holding:null,drag:null};
 const castEl=document.getElementById("cast"),worldEl=document.getElementById("world");
-function renderCast(){
-  const beat=(60/state.track.bpm)+"s";castEl.innerHTML="";
-  ANIMALS.forEach(function(a){
-    const zone=state.zones[a.id],p=state.pos[a.id];
-    if(!a._act||a._zone!==zone){a._act=actFor(zone);a._zone=zone}
-    const div=document.createElement("div");
-    div.className="char"+(state.selected===a.id?" selected":"");
-    div.dataset.id=a.id;div.dataset.act=a._act;
-    div.style.setProperty("--beat",beat);
-    div.style.left=(p.x*100)+"%";div.style.top=(p.y*100)+"%";
-    const prop=a._act==="drink"?"🥤":a._act==="sit"?"🪑":"";
-    const svg=typeof spriteSVG==="function"?spriteSVG(a.kind,state.outfits[a.id]):"";
-    div.innerHTML='<div class="bubble" data-bubble></div><div class="prop'+(prop?" show":"")+'">'+prop+'</div>'+svg+'<div class="name">'+a.name+'</div>';
-    if(state.mode==="interact"){
-      div.addEventListener("pointerdown",function(e){e.preventDefault();state.holding=a.id;state.selected=a.id;state.drag=a.id;div.classList.add("held","selected");div.setPointerCapture(e.pointerId);document.getElementById("dressName").textContent=a.name});
-      div.addEventListener("pointermove",function(e){if(state.drag!==a.id)return;const r=worldEl.getBoundingClientRect();let x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;x=Math.max(.08,Math.min(.92,x));y=Math.max(.12,Math.min(.92,y));state.pos[a.id]={x,y};div.style.left=(x*100)+"%";div.style.top=(y*100)+"%";div.style.transition="none";document.querySelectorAll(".zone").forEach(z=>z.classList.remove("hot"));const nz=zoneAt(x,y);if(nz==="dance")document.getElementById("z-dance").classList.add("hot");if(nz==="bar")document.getElementById("z-bar").classList.add("hot");if(nz==="lounge")document.getElementById("z-lounge").classList.add("hot")});
-      function endDrag(){if(state.drag!==a.id)return;state.drag=null;state.holding=null;div.classList.remove("held");div.style.transition="";document.querySelectorAll(".zone").forEach(z=>z.classList.remove("hot"));const p=state.pos[a.id],nz=zoneAt(p.x,p.y);state.zones[a.id]=nz;a._act=actFor(nz);a._zone=nz;state.pos[a.id]=zonePos(nz);renderCast()}
-      div.addEventListener("pointerup",endDrag);div.addEventListener("pointercancel",endDrag);
-    }
-    castEl.appendChild(div);
-  });
-}
-function lifeTick(){ANIMALS.forEach(function(a){if(state.drag===a.id||state.holding===a.id)return;if(Math.random()<.5)state.pos[a.id]=zonePos(state.zones[a.id]);if(Math.random()<.16){const keys=Object.keys(ZONES),nz=keys[Math.floor(Math.random()*keys.length)];state.zones[a.id]=nz;state.pos[a.id]=zonePos(nz);a._act=actFor(nz);a._zone=nz}if(Math.random()<.28)a._act=actFor(state.zones[a.id])});if(Math.random()<.45){const a=ANIMALS[Math.floor(Math.random()*ANIMALS.length)],Z=ZONES[state.zones[a.id]];castEl.querySelectorAll(".char").forEach(function(n){if(n.dataset.id===a.id){const b=n.querySelector("[data-bubble]");if(b){b.textContent=Z.bubble[Math.floor(Math.random()*Z.bubble.length)];b.classList.add("show");setTimeout(function(){b.classList.remove("show")},900)}}})}renderCast()}
-setInterval(lifeTick,2400);
+ANIMALS.forEach(a=>{a._act=pickAct(a.zone);a._zone=a.zone;a._actTimer=0});
+function renderCast(){const beat=(60/state.track.bpm)+"s";castEl.innerHTML="";ANIMALS.forEach(function(a){const p=state.pos[a.id];const div=document.createElement("div");div.className="char"+(state.selected===a.id?" selected":"");div.dataset.id=a.id;div.dataset.act=a._act||"idle";div.style.setProperty("--beat",beat);div.style.left=(p.x*100)+"%";div.style.top=(p.y*100)+"%";const prop=a._act==="drink"?"🥤":a._act==="sit"?"🪑":"";const svg=typeof spriteSVG==="function"?spriteSVG(a.kind,state.outfits[a.id]):"";div.innerHTML='<div class="bubble" data-bubble></div><div class="prop'+(prop?" show":"")+'">'+prop+'</div>'+svg+'<div class="name">'+a.name+'</div>';const fig=div.querySelector(".figure");if(fig)fig.style.animationDelay=(-(ANIMALS.indexOf(a)*.4))+"s";if(state.mode==="interact"){div.addEventListener("pointerdown",function(e){e.preventDefault();state.holding=a.id;state.selected=a.id;state.drag=a.id;div.classList.add("held","selected");div.setPointerCapture(e.pointerId);document.getElementById("dressName").textContent=a.name});div.addEventListener("pointermove",function(e){if(state.drag!==a.id)return;const r=worldEl.getBoundingClientRect();let x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;x=Math.max(.08,Math.min(.92,x));y=Math.max(.12,Math.min(.92,y));state.pos[a.id]={x,y};div.style.left=(x*100)+"%";div.style.top=(y*100)+"%";div.style.transition="none";document.querySelectorAll(".zone").forEach(z=>z.classList.remove("hot"));const nz=zoneAt(x,y);if(nz==="dance")document.getElementById("z-dance").classList.add("hot");if(nz==="bar")document.getElementById("z-bar").classList.add("hot");if(nz==="lounge")document.getElementById("z-lounge").classList.add("hot")});function endDrag(){if(state.drag!==a.id)return;state.drag=null;state.holding=null;div.classList.remove("held");div.style.transition="";document.querySelectorAll(".zone").forEach(z=>z.classList.remove("hot"));const p=state.pos[a.id],nz=zoneAt(p.x,p.y);state.zones[a.id]=nz;a._act=pickAct(nz);a._zone=nz;state.pos[a.id]=zonePos(nz);renderCast()}div.addEventListener("pointerup",endDrag);div.addEventListener("pointercancel",endDrag)}castEl.appendChild(div)})}
+function lifeTick(){ANIMALS.forEach(function(a){if(state.drag===a.id||state.holding===a.id)return;a._actTimer=(a._actTimer||0)+1;if(Math.random()<.35)state.pos[a.id]=zonePos(state.zones[a.id]);if(Math.random()<.12){const keys=Object.keys(ZONES),nz=keys[Math.floor(Math.random()*keys.length)];state.zones[a.id]=nz;state.pos[a.id]=zonePos(nz);a._act=pickAct(nz);a._zone=nz;a._actTimer=0}else if(a._actTimer>2||Math.random()<.4){a._act=pickAct(state.zones[a.id]);a._actTimer=0}});if(Math.random()<.5){const a=ANIMALS[Math.floor(Math.random()*ANIMALS.length)],Z=ZONES[state.zones[a.id]];castEl.querySelectorAll(".char").forEach(function(n){if(n.dataset.id===a.id){const b=n.querySelector("[data-bubble]");if(b){b.textContent=Z.bubble[Math.floor(Math.random()*Z.bubble.length)];b.classList.add("show");setTimeout(function(){b.classList.remove("show")},900)}}})}renderCast()}
+setInterval(lifeTick,2000);
 const dressSheet=document.getElementById("dressSheet"),musicSheet=document.getElementById("musicSheet"),lightSheet=document.getElementById("lightSheet");
 const outfitGrid=document.getElementById("outfitGrid"),trackList=document.getElementById("trackList"),lightList=document.getElementById("lightList");
 function openSheet(el){dressSheet.classList.remove("open");musicSheet.classList.remove("open");lightSheet.classList.remove("open");el.classList.add("open")}
