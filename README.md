@@ -1,35 +1,31 @@
 # Jungle Groove
 
-**Toca Boca dress-up × Lego Marvel free-roam × Madagascar/Zootopia dance party.**
+**Live playable dance party** — watch or interact.
 
-iPad-first play prototype. Jungle animals. Change outfits. Change the music. They dance until you hold them.
+Toca-style dress-up · jungle animals · Madagascar/Zootopia energy · measured 48-node world matrix.
 
-## Play now
+## Play live
 
-Open the live prototype:
+| Surface | URL |
+|---------|-----|
+| **Primary (custom domain)** | http://sequesteredyeti.art/jungle-groove/ |
+| **CDN (always current)** | https://cdn.jsdelivr.net/gh/snowphamtom/jungle-groove@main/index.html |
+| **GitHub Pages** | Enable Settings → Pages → GitHub Actions, then https://snowphamtom.github.io/jungle-groove/ |
 
-**https://snowphamtom.github.io/jungle-groove/**
+On iPad: open → Share → **Add to Home Screen** for full-screen.
 
-(or open `index.html` locally / Add to Home Screen on iPad)
+## Modes
 
-## What it is
+- **WATCH** — party runs itself (default)
+- **INTERACT** — hold characters, dress them, change music
 
-- **Dress up** any of 6 jungle animals (Toca-style, no fail state)
-- **Dance party** floor — characters move to the beat
-- **Hold a character** to pause their dance and interact
-- **Change the playlist** — tempo drives dance speed
-- **Free-roam energy** — same spirit as Lego Marvel hub play, focused on the party core loop
+## Repo contents
 
-## Cast
+- `index.html` — full game
+- `MEASURED_WORLD.md` — Codex×Matrix spatial specification
+- `world_matrix.json` — machine-readable inventory
+- `netlify.toml` / `vercel.json` — ready for one-click static deploy
 
-Leo 🦁 · Zara 🦓 · Momo 🐵 · Pip 🦜 · Tiko 🐯 · Nala 🦒
-
-## Status (2026-11-08)
-
-Playable single-file prototype. Procedural audio (Web Audio). No account, no install beyond the browser.
-
-Not MAGPIE. Not CeilingGate. A pure play surface.
-
-See [CONCEPT.md](./CONCEPT.md) for the full design variant.
+Not MAGPIE. Not CeilingGate. Pure play surface.
 
 By Taylor Heller / Monsters Ink LLC
