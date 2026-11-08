@@ -1,31 +1,27 @@
 # Jungle Groove
 
-**Live playable dance party** — watch or interact.
+**Living jungle dance party** with **7 full-body sprite characters** (not emoji).
 
-Toca-style dress-up · jungle animals · Madagascar/Zootopia energy · measured 48-node world matrix.
+Style: Toca Boca / friendly Lego / simple Roblox — chunky, rounded, consistent proportions.
 
-## Play live
+## Cast
 
-| Surface | URL |
-|---------|-----|
-| **Primary (custom domain)** | http://sequesteredyeti.art/jungle-groove/ |
-| **CDN (always current)** | https://cdn.jsdelivr.net/gh/snowphamtom/jungle-groove@main/index.html |
-| **GitHub Pages** | Enable Settings → Pages → GitHub Actions, then https://snowphamtom.github.io/jungle-groove/ |
+| Character | Animal |
+|-----------|--------|
+| Leo | Lion |
+| Zara | Zebra |
+| Momo | Monkey |
+| Pip | Parrot |
+| Tiko | Tiger |
+| Nala | Giraffe |
+| Bongo | Hippo |
 
-On iPad: open → Share → **Add to Home Screen** for full-screen.
+Each has full body (head, torso, arms, legs, tail), zone actions (dance / drink / sit / chat / rest), and costume layers.
 
-## Modes
+## Play
 
-- **WATCH** — party runs itself (default)
-- **INTERACT** — hold characters, dress them, change music
+https://cdn.jsdelivr.net/gh/snowphamtom/jungle-groove@main/index.html
 
-## Repo contents
+WATCH = scenario runs alone. INTERACT = drag to Dance Floor, Refreshments, or Lounge.
 
-- `index.html` — full game
-- `MEASURED_WORLD.md` — Codex×Matrix spatial specification
-- `world_matrix.json` — machine-readable inventory
-- `netlify.toml` / `vercel.json` — ready for one-click static deploy
-
-Not MAGPIE. Not CeilingGate. Pure play surface.
-
-By Taylor Heller / Monsters Ink LLC
+Music + lighting change the environment; characters keep living without you.
